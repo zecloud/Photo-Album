@@ -49,7 +49,7 @@ function App() {
                     body: JSON.stringify({container:'img',blobName:file.name,permissions:'awl'})
                   }
                   console.log(file)
-                  const response = await fetch(`http://localhost:7072/api/sas/`,config);
+                  const response = await fetch(`/api/sas/`,config);
                   const sas = await response.json();
                   console.log(sas);
                   // const configUpload  = {
