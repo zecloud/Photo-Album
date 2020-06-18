@@ -3,7 +3,7 @@ var azure = require('azure-storage');
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    if (req.body.container) {
+    if (req.body && req.body.container) {
 
         // The following values can be used for permissions: 
 
