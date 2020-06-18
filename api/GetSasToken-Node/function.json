@@ -9,7 +9,8 @@
         "get",
         "post"
       ]
-    },
+      ,
+      "route": "sas/"},
     {
       "type": "http",
       "direction": "out",
