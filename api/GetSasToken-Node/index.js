@@ -11,7 +11,10 @@ module.exports = async function (context, req) {
 
         // Concatenate multiple permissions, such as "rwa" = Read, Write, Add
 
-        context.res = generateSasToken(context, req.body.container, req.body.blobName, req.body.permissions);
+        context.res ={ status:200,
+            body: generateSasToken(context, req.body.container, req.body.blobName, req.body.permissions)
+        };
+             
 
     } else {
 
