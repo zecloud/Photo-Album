@@ -47,7 +47,7 @@ import azure.functions as func
 
 _ALLOWED_HTTP_METHOD = "POST"
 _AZURE_STORAGE_API_VERSION = "2018-03-28"
-_AZURE_STORAGE_CONN_STRING_ENV_NAME = "MyStorageConnectionString"
+_AZURE_STORAGE_CONN_STRING_ENV_NAME = "AzureWebJobsStorage"
 _SAS_TOKEN_DEFAULT_TTL = 1
 
 connString = os.environ[_AZURE_STORAGE_CONN_STRING_ENV_NAME]
