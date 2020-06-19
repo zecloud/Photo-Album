@@ -180,7 +180,7 @@ def main(req: func.HttpRequest) -> str:
 
     permission = req_body.get('permission')
     container_name = req_body.get('container')
-    blob_name = req_body.get('blobname')
+    blob_name = req_body.get('blobName')
     token_ttl = _SAS_TOKEN_DEFAULT_TTL
     if req_body.get('ttl'):
         token_ttl = int(req_body.get('ttl'))

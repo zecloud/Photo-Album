@@ -1,5 +1,4 @@
 {
-  "scriptFile": "__init__.py",
   "bindings": [
     {
       "authLevel": "function",
@@ -9,13 +8,12 @@
       "methods": [
         "get",
         "post"
-      ],
-      "route": "sas/"
+      ]
     },
     {
       "type": "http",
       "direction": "out",
-      "name": "$return"
+      "name": "res"
     }
   ]
 }
