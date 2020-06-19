@@ -48,7 +48,7 @@ function App() {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({container:'img',blobName:file.name,permissions:'awl'})
+                    body: JSON.stringify({container:'img',blobName:file.name,permission:'awl'})
                   }
                   //console.log(file)
                   const response = await fetch(`/api/sas/`,config);
