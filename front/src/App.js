@@ -36,6 +36,8 @@ function App() {
         onprocessfile={(filetoprocess,err)=>{
             
         }}
+        
+
         server={
             {    
 
@@ -48,9 +50,12 @@ function App() {
                     },
                     body: JSON.stringify({container:'img',blobName:file.name,permissions:'awl'})
                   }
-                  console.log(file)
+                  //console.log(file)
                   const response = await fetch(`/api/sas/`,config);
                   const sas = await response.json();
+                 
+                  //metadata.setMetadata("url",sas.url);
+                  //file.setMetadata("url",sas.url);
                   console.log(sas);
                   // const configUpload  = {
                   //   method: 'PUT',
