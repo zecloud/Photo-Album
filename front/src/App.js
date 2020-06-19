@@ -77,7 +77,7 @@ function App() {
                     // const tosend= url+insta+"-"+file.name.toLowerCase();
                     // const auth = new Auth();
                     // const uid=auth.currentUser().id;//'260717ac-9153-4d35-9683-d1459be8b35d';
-                  request.open('PUT',sas.url );
+                  request.open('PUT',sas.uri );
                   request.setRequestHeader('Content-Type',file.type);
                   request.setRequestHeader('x-ms-blob-type','BlockBlob');
                     // // Should call the progress method to update the progress to 100% before calling load
