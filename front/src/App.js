@@ -28,7 +28,7 @@ function App() {
        
       </header>
 <div>
-  <FilePond allowMultiple={true}  maxFiles={10} allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
+  <FilePond allowMultiple={true}  allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
         // ref={ref => this.pond = ref}
         oninit={() => {
             
