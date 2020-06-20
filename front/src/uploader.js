@@ -1,8 +1,5 @@
 import React from 'react';
-import ballon from './ballon.svg';
-import './App.css';
-// import Uploader from './uploader'
-import Gallery from './gallery'
+// Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -17,27 +14,9 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {photos: []};  
-  }
-
-  render() {
-//function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        80 jours !
-        <img src={ballon} className="App-logo" alt="logo" />
-        <p>
-          Upload your photos below 
-        </p>
-       
-      </header>
-      {/* <Uploader/> */}
-      <div>
+function Uploader(props) {
+    return (
+    <div>
     <FilePond allowMultiple={true}  maxFiles={10} allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
             //ref={ref => this.pond = ref}
             oninit={() => {
@@ -52,10 +31,6 @@ class App extends React.Component {
             onprocessfile={(error,fileprocessed)=>{
                 //console.log(error);
                 console.log(fileprocessed.serverId);
-                this.setState({photos: [{
-                  key:fileprocessed.id,
-                  src:fileprocessed.serverId
-                }]});
             }}
             
 
@@ -145,10 +120,7 @@ class App extends React.Component {
                 }
             }/>
     </div>
-      <Gallery images={this.state.photos}/>
-    </div>
-  );
-  }
+    );
 }
 
-export default App;
+export default Uploader;
