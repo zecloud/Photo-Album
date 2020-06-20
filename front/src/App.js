@@ -13,9 +13,14 @@ import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+// Import the plugin code
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
+// Import the plugin code
+import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview,FilePondPluginImageTransform,FilePondPluginImageResize);
 
 
 class App extends React.Component {
@@ -39,6 +44,10 @@ class App extends React.Component {
       {/* <Uploader/> */}
       <div>
     <FilePond allowMultiple={true}  maxFiles={10} allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
+            allowImageTransform={true}
+            allowImageResize={true}
+            imageResizeTargetWidth={64}
+            imageTransformVariantsIncludeOriginal={true}
             //ref={ref => this.pond = ref}
             oninit={() => {
                 
@@ -47,11 +56,12 @@ class App extends React.Component {
                 console.log(file.filename)
                 
 
-                file.setMetadata("poulet","test");
+                file.setMetadata("id",file.id);
             }}
             onprocessfile={(error,fileprocessed)=>{
                 //console.log(error);
-                console.log(fileprocessed.serverId);
+                //console.log(fileprocessed)
+                //console.log(fileprocessed.serverId);
                 this.setState((state, props) => (
                   {photos:state.photos.concat({
                   key:fileprocessed.id,
@@ -60,39 +70,50 @@ class App extends React.Component {
               })
                 );
             }}
-            
+            onaddfile={(error,fileloaded)=>{
+              //console.log(fileloaded);
+            }
+          }
 
             server={
                 {    
 
                     process: async(fieldName, file, metadata, load, error, progress, abort) =>   {
-                    const config = {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({container:'img',blobName:file.name,permission:'rawl'})
-                    }
-                    console.log(metadata);
-                    const response = await fetch(`/api/sas/`,config);
-                    const sas = await response.json();
                     
+                    async function  getSas(fileName){
+                        const config = {
+                          method: 'POST',
+                          headers: {
+                              'Accept': 'application/json',
+                              'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({container:'img',blobName:fileName,permission:'rawl'})
+                      }
+                      //console.log(file)
+                      //console.log(metadata);
+
+                      const response = await fetch(`/api/sas/`,config);
+                      const sas = await response.json();
+                      return sas;
+                    };
+                    const sas = await getSas(file[0].file.name);
+                    const sasThumbnail= await getSas('small_'+file[0].file.name);
+                    //this.props 
                     //metadata.setMetadata("url",sas.url);
                     //file.setMetadata("url",sas.url);
-                    console.log(sas);
-                    // const configUpload  = {
-                    //   method: 'PUT',
-                    //   headers:{
-                    //     'Content-Type': file.type,
-                    //     'x-ms-blob-type':'BlockBlob'
-                    //   },
-                    //   body:file
-                    // }
-                    // const uploadSuccess = await fetch(sas.uri,configUpload);
-                    // const isSuccess  = await uploadSuccess;
-                    // console.log(isSuccess);
-
+                    //console.log(sas);
+                    const configUpload  = {
+                      method: 'PUT',
+                      headers:{
+                        'Content-Type': file.type,
+                        'x-ms-blob-type':'BlockBlob'
+                      },
+                      body:file[1].file
+                    }
+                    const uploadSuccess = await fetch(sasThumbnail.uri,configUpload);
+                    const isSuccess  = await uploadSuccess;
+                    console.log(isSuccess);
+                    
 
                     //this.setState({ data: json });
                     // fieldName is the name of the input field
@@ -107,7 +128,7 @@ class App extends React.Component {
                         // const auth = new Auth();
                         // const uid=auth.currentUser().id;//'260717ac-9153-4d35-9683-d1459be8b35d';
                     request.open('PUT',sas.uri );
-                    request.setRequestHeader('Content-Type',file.type);
+                    request.setRequestHeader('Content-Type',file[0].file.type);
                     request.setRequestHeader('x-ms-blob-type','BlockBlob');
                         // // Should call the progress method to update the progress to 100% before calling load
                         // // Setting computable to false switches the loading indicator to infinite mode
@@ -122,8 +143,12 @@ class App extends React.Component {
                         if (request.status >= 200 && request.status < 300) {
                             // the load method accepts either a string (id) or an object
                             //load(request.responseText);
+                            //const ret ={'src':request.responseURL,"srcsmall":sasThumbnail.uri};
+                            //console.log(ret)
+                           
                             load(request.responseURL);
-                            //console.log(request);
+                            //console.log(this);
+                            //console.log(sasThumbnail.uri);
                         }
                         else {
                             // Can call the error method if something is wrong, should exit after
@@ -131,7 +156,7 @@ class App extends React.Component {
                         }
                     };
 
-                    request.send(file);
+                    request.send(file[0].file);
                         
                         // // Should expose an abort method so the request can be cancelled
                     return {

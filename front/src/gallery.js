@@ -10,6 +10,7 @@ const Gallery = ({ images, scrollPosition }) => (
         key={image.key}
         alt={image.alt}
         height={image.height}
+        effect="blur"
         // Make sure to pass down the scrollPosition,
         // this will be used by the component to know
         // whether it must track the scroll position or not
