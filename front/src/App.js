@@ -52,10 +52,13 @@ class App extends React.Component {
             onprocessfile={(error,fileprocessed)=>{
                 //console.log(error);
                 console.log(fileprocessed.serverId);
-                this.setState({photos: [{
+                this.setState((state, props) => (
+                  {photos:state.photos.concat({
                   key:fileprocessed.id,
                   src:fileprocessed.serverId
-                }]});
+                })
+              })
+                );
             }}
             
 
