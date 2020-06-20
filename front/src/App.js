@@ -70,7 +70,7 @@ class App extends React.Component {
               return transforms;
           }}}
 
-            //ref={ref => this.pond = ref}
+            ref={ref => this.pond = ref}
             oninit={() => {
                 
             } }
@@ -95,6 +95,7 @@ class App extends React.Component {
                 })
               })
                 );
+                this.pond.removeFile(fileprocessed.id);
             }}
             onaddfile={(error,fileloaded)=>{
               //console.log(fileloaded);
