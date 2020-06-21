@@ -66,7 +66,7 @@ class App extends React.Component {
             imageTransformVariantsIncludeOriginal={true}
             imageResizeUpscale={false}
             imageTransformVariants ={{'thumb_medium_': transforms => {
-              transforms.resize.size.width = 768;
+              transforms.resize.size.width = 494;
               return transforms;
           }}}
 
