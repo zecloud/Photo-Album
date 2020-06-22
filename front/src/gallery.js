@@ -17,6 +17,7 @@ const options = {
 
 
 const Gallery = ({ images, scrollPosition }) => (
+  
   <div>
       <SRLWrapper options={options}>
        <PhotoGallery photos={images} renderImage={
