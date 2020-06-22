@@ -21,6 +21,7 @@ const Gallery = ({ images, scrollPosition }) => (
       <SRLWrapper options={options}>
        <PhotoGallery photos={images} renderImage={
           ({ index, left, top, key, photo }) => (
+            
             <LazyLoadImage
               key={photo.key}
               alt={photo.alt}
@@ -31,10 +32,12 @@ const Gallery = ({ images, scrollPosition }) => (
               // this will be used by the component to know
               // whether it must track the scroll position or not
               scrollPosition={scrollPosition}
-              src={photo.src}
-              width={photo.width} />
+              src={photo.originalSrc}
+              width="494" />
+              
               )
        } />
+       
        </SRLWrapper>
   </div>
 );
