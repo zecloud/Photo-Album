@@ -3,6 +3,7 @@ import ballon from './ballon.svg';
 import './App.css';
 // import Uploader from './uploader'
 import Gallery from './gallery'
+import SimpleReactLightbox from "simple-react-lightbox";
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -190,7 +191,9 @@ class App extends React.Component {
                 }
             }/>
     </div>
+    <SimpleReactLightbox>
       <Gallery images={this.state.photos}/>
+      </SimpleReactLightbox>
     </div>
   );
   }

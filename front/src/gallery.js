@@ -3,6 +3,7 @@ import React from 'react';
 import { LazyLoadImage, trackWindowScroll }
   from 'react-lazy-load-image-component';
 import PhotoGallery from "react-photo-gallery";
+import { SRLWrapper } from "simple-react-lightbox";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 
@@ -10,6 +11,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Gallery = ({ images, scrollPosition }) => (
   <div>
+      <SRLWrapper>
        <PhotoGallery photos={images} renderImage={
           ({ index, left, top, key, photo }) => (
             <LazyLoadImage
@@ -26,6 +28,7 @@ const Gallery = ({ images, scrollPosition }) => (
               width={photo.width} />
               )
        } />
+       </SRLWrapper>
   </div>
 );
 // Wrap Gallery with trackWindowScroll HOC so it receives
