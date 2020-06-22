@@ -3,6 +3,7 @@ import ballon from './ballon.svg';
 import './App.css';
 // import Uploader from './uploader'
 import Gallery from './gallery'
+import SimpleReactLightbox from "simple-react-lightbox";
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -86,12 +87,15 @@ class App extends React.Component {
                 //console.log(fileprocessed.serverId);
                 const urisas =await getSas('medium_'+fileprocessed.serverId);
                 const urisaslowres= await getSas('small_'+fileprocessed.serverId); 
-                console.log(urisas);
+                const urisasoriginal= await getSas(fileprocessed.serverId); 
+                
+                console.log(urisasoriginal);
                 this.setState((state, props) => (
                   {photos:state.photos.concat({
                   key:fileprocessed.id,
                   src:urisas.uri,
-                  lowResSrc : urisaslowres.uri
+                  lowResSrc : urisaslowres.uri,
+                  originalSrc : urisasoriginal.uri
                 })
               })
                 );
@@ -112,6 +116,7 @@ class App extends React.Component {
                     const sas = await getSas(original_filename,'awl');
                     const sasThumbnail= await getSas('small_'+original_filename,'awl');
                     const sasMedium = await  getSas('medium_'+original_filename,'awl');
+                    //const sasLarge = await  getSas('large_'+original_filename,'awl');
                     async function upload(fileToUpload,sasUri){
                       const configUpload  = {
                         method: 'PUT',
@@ -131,6 +136,7 @@ class App extends React.Component {
                     //console.log(sas);
                    await upload(file[1].file,sasThumbnail.uri);
                    await upload(file[2].file,sasMedium.uri);
+
                     
 
                     //this.setState({ data: json });
@@ -190,7 +196,9 @@ class App extends React.Component {
                 }
             }/>
     </div>
+    <SimpleReactLightbox>
       <Gallery images={this.state.photos}/>
+      </SimpleReactLightbox>
     </div>
   );
   }
