@@ -1,5 +1,5 @@
 import React from 'react';
-import ballon from './ballon.svg';
+// import ballon from './ballon.svg';
 import './App.css';
 // import Uploader from './uploader'
 import Gallery from './gallery'
@@ -53,14 +53,14 @@ class App extends React.Component {
     
     <div className="App">
       <Header/>
-      <header className="App-header">
-        80 jours !
+      {/* <header className="App-header">
+       
         <img src={ballon} className="App-logo" alt="logo" />
         <p>
           Upload your photos below 
         </p>
        
-      </header>
+      </header> */}
       {/* <Uploader/> */}
       <div>
     <FilePond allowMultiple={true}  maxFiles={10} allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
