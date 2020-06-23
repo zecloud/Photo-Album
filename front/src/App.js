@@ -4,6 +4,7 @@ import './App.css';
 // import Uploader from './uploader'
 import Gallery from './gallery'
 import SimpleReactLightbox from "simple-react-lightbox";
+import Header from'./header';
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -49,7 +50,9 @@ class App extends React.Component {
   render() {
 //function App() {
   return (
+    
     <div className="App">
+      <Header/>
       <header className="App-header">
         80 jours !
         <img src={ballon} className="App-logo" alt="logo" />
