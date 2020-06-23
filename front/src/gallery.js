@@ -5,21 +5,21 @@ import { LazyLoadImage, trackWindowScroll }
 import PhotoGallery from "react-photo-gallery";
 import { SRLWrapper } from "simple-react-lightbox";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-const browser = navigator.userAgent
-const isFirefox = browser.indexOf('Firefox') > -1
+// const browser = navigator.userAgent
+// const isFirefox = browser.indexOf('Firefox') > -1
 
-const options = {
-    settings: {
-      overlayColor: isFirefox ? '#000000' : 'rgba(0,0,0,0,8)'
-    }
-};
+// const options = {
+//     settings: {
+//       overlayColor: isFirefox ? '#000000' : 'rgba(0,0,0,0,8)'
+//     }
+// };
 
 
 
 const Gallery = ({ images, scrollPosition }) => (
   
   <div>
-      <SRLWrapper options={options}>
+      <SRLWrapper >
        <PhotoGallery photos={images} renderImage={
           ({ index, left, top, key, photo }) => (
             
