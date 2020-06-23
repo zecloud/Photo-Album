@@ -1,9 +1,10 @@
 import React from 'react';
-import ballon from './ballon.svg';
+// import ballon from './ballon.svg';
 import './App.css';
 // import Uploader from './uploader'
 import Gallery from './gallery'
 import SimpleReactLightbox from "simple-react-lightbox";
+import Header from'./header';
 import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
@@ -49,15 +50,17 @@ class App extends React.Component {
   render() {
 //function App() {
   return (
+    
     <div className="App">
-      <header className="App-header">
-        80 jours !
+      <Header/>
+      {/* <header className="App-header">
+       
         <img src={ballon} className="App-logo" alt="logo" />
         <p>
           Upload your photos below 
         </p>
        
-      </header>
+      </header> */}
       {/* <Uploader/> */}
       <div>
     <FilePond allowMultiple={true}  maxFiles={10} allowFileTypeValidation={true} acceptedFileTypes={['image/jpeg']} 
