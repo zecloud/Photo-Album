@@ -5,8 +5,9 @@ import './App.css';
 import Gallery from './gallery'
 import SimpleReactLightbox from "simple-react-lightbox";
 import Header from'./header';
+import TitleNote from './TitleNote'
 import { FilePond, registerPlugin } from "react-filepond";
-
+import { v4 as uuidv4 } from 'uuid';
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
 
@@ -41,10 +42,29 @@ const sas = await response.json();
 return sas;
 };
 
+async function addNewPhoto(sessionId,filename)
+{
+  const config = {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({UserId:'anonymous',SessionId:sessionId,photo:[{filename:filename}]})
+  }
+//console.log(file)
+//console.log(metadata);
+
+const response = await fetch(`/api/savenote/`,config);
+const sas = await response.text();
+return sas;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {photos: []};  
+    this.state = {photos: [],uuid:uuidv4()};  
+    
   }
 
   render() {
@@ -69,10 +89,10 @@ class App extends React.Component {
             imageResizeTargetWidth={64}
             imageTransformVariantsIncludeOriginal={true}
             imageResizeUpscale={false}
-            imageTransformVariants ={{'thumb_medium_': transforms => {
-              transforms.resize.size.width = 494;
-              return transforms;
-          }}}
+          //   imageTransformVariants ={{'thumb_medium_': transforms => {
+          //     transforms.resize.size.width = 494;
+          //     return transforms;
+          // }}}
 
             ref={ref => this.pond = ref}
             oninit={() => {
@@ -88,7 +108,7 @@ class App extends React.Component {
                 //console.log(error);
                 console.log(fileprocessed);
                 //console.log(fileprocessed.serverId);
-                const urisas =await getSas('medium_'+fileprocessed.serverId);
+                //const urisas =await getSas('medium_'+fileprocessed.serverId);
                 const urisaslowres= await getSas('small_'+fileprocessed.serverId); 
                 const urisasoriginal= await getSas(fileprocessed.serverId); 
                 
@@ -96,13 +116,16 @@ class App extends React.Component {
                 this.setState((state, props) => (
                   {photos:state.photos.concat({
                   key:fileprocessed.id,
-                  src:urisas.uri,
+                  //src:urisas.uri,
                   lowResSrc : urisaslowres.uri,
                   originalSrc : urisasoriginal.uri
                 })
+
               })
                 );
+                await addNewPhoto(this.state.uuid,fileprocessed.filename);
                 this.pond.removeFile(fileprocessed.id);
+               
             }}
             onaddfile={(error,fileloaded)=>{
               //console.log(fileloaded);
@@ -118,7 +141,7 @@ class App extends React.Component {
                     const original_filename= file[0].file.name;
                     const sas = await getSas(original_filename,'awl');
                     const sasThumbnail= await getSas('small_'+original_filename,'awl');
-                    const sasMedium = await  getSas('medium_'+original_filename,'awl');
+                    //const sasMedium = await  getSas('medium_'+original_filename,'awl');
                     //const sasLarge = await  getSas('large_'+original_filename,'awl');
                     async function upload(fileToUpload,sasUri){
                       const configUpload  = {
@@ -138,7 +161,7 @@ class App extends React.Component {
                     //file.setMetadata("url",sas.url);
                     //console.log(sas);
                    await upload(file[1].file,sasThumbnail.uri);
-                   await upload(file[2].file,sasMedium.uri);
+                   //await upload(file[2].file,sasMedium.uri);
 
                     
 
@@ -199,6 +222,7 @@ class App extends React.Component {
                 }
             }/>
     </div>
+    <TitleNote idsession={this.state.uuid}/>
     <SimpleReactLightbox>
       <Gallery images={this.state.photos}/>
       </SimpleReactLightbox>
