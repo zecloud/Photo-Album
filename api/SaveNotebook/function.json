@@ -1,0 +1,36 @@
+{
+  "bindings": [
+    {
+      "name": "notebookin",
+      "type": "table",
+      "tableName": "notebooks",
+      "partitionKey": "anonymous",
+      "rowKey": "{sessionid}",
+      "connection": "AzureWebJobsStorage",
+      "direction": "in"
+    },
+    {
+      "name": "notebook",
+      "type": "table",
+      "tableName": "notebooks",
+      
+      "connection": "AzureWebJobsStorage",
+      "direction": "out"
+    },
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

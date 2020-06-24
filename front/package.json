@@ -19,8 +19,10 @@
     "react-headroom": "^3.0.0",
     "react-lazy-load-image-component": "^1.5.0-beta.0",
     "react-photo-gallery": "^8.0.0",
+    "react-quill": "^2.0.0-beta.2",
     "react-scripts": "3.4.1",
-    "simple-react-lightbox": "^3.2.3-2"
+    "simple-react-lightbox": "^3.2.3-2",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
