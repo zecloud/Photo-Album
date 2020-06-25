@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "name": "inputDocumentIn",
+      "type": "cosmosDB",
+      "databaseName": "80jours",
+      "collectionName": "Notebooks",
+      "id" : "{SessionId}",
+      "partitionKey": "{UserId}",
+      "connectionStringSetting": "MyAccount_COSMOSDB",
+      "direction": "in"
+  },
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}
