@@ -45,17 +45,20 @@ const SharedNote = ( props) => {
         if(Note)
         {
             //console.log(Note);
-            const Photos =[];
+            var Photos =[];
             if(Note.photo)
             {
             Note.photo.forEach(async (ph) => {
+                console.log(ph);
+
                 const sasthumb = await getSas('small_'+ph.filename,'r');
                 const sas = await getSas(ph.filename,'r');
-                setPhotos(Photos.concat({
+                Photos =Photos.concat({
                   key:ph.filename,
                   lowResSrc : sasthumb.uri,
                   originalSrc : sas.uri
-                }));
+                })
+                setPhotos(Photos);
             });
           }
         }
