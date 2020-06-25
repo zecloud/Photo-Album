@@ -32,6 +32,7 @@ const SharedNote = ( props) => {
     const [Note, setNote] = useState('');
     const [Photos,setPhotos]=useState([]);
     useEffect(() => {
+        setNote({title:' <img src="/ballon.svg"  class="App-logo" width="100" height="100" alt=""/>'});
         //console.log(Note);
         const longuuid = short().toUUID(props.SessionId);
         //short-uuid
