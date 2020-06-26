@@ -2,6 +2,7 @@ import React from 'react';
 // import ballon from './ballon.svg';
 import './App.css';
 import getSas from './getSas';
+import GetNote from './GetNote'
 // import Uploader from './uploader'
 import Gallery from './gallery'
 import SimpleReactLightbox from "simple-react-lightbox";
@@ -49,15 +50,46 @@ return sas;
 class Create extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {photos: [],uuid:uuidv4()};  
+    
+    const uuid=props.SessionId ? short().toUUID(props.SessionId): uuidv4();
+    //console.log(uuid);
+
+    this.state = {photos: [],uuid: uuid,reload:props.SessionId?true:false}; 
+    
+   
     
   }
+ async componentDidMount() {
+  if(this.state.reload)
+  {
+    const Note =await GetNote(this.state.uuid);
+    if(Note.photo)
+            {
+            Note.photo.forEach(async (ph) => {
+                console.log(ph);
 
+                const sasthumb = await getSas('small_'+ph.filename,'r');
+                const sas = await getSas(ph.filename,'r');
+               
+                this.setState((state, props) => ({
+                  photos :state.photos.concat({
+                    key:ph.filename,
+                    lowResSrc : sasthumb.uri,
+                    originalSrc : sas.uri
+                  })
+                }));
+                //setPhotos(Photos);
+            });
+          }
+
+  }
+ }
   render() {
 //function App() {
   return (
     
     <div >
+       <a href={'/'+short().fromUUID(this.state.uuid)}>Keep editing this Notebook </a>
      <a href={'/Share/'+short().fromUUID(this.state.uuid)}>Share this Notebook</a>
       {/* <header className="App-header">
         ()=>{return }
@@ -208,7 +240,7 @@ class Create extends React.Component {
                 }
             }/>
     </div>
-    <TitleNote idsession={this.state.uuid}/>
+    <TitleNote idsession={this.state.uuid} reload={this.state.reload}/>
     <SimpleReactLightbox>
       <Gallery images={this.state.photos}/>
       </SimpleReactLightbox>

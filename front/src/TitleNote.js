@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState,useEffect } from 'react';
 import useInterval from './useInterval'
-
+import GetNote from './GetNote'
 async function SaveNote(idSession,title){
   const config = {
     method: 'POST',
@@ -19,21 +19,40 @@ console.log(sas);
 //return sas;
 }
 
-function TitleNote(props) {
-  const [value, setValue] = useState('');
+const TitleNote = (props) =>{
+  const [value, setValue] = useState(props.title);
   const [saved,setSaved] = useState('');
-
+  const [reload] = useState(props.reload);
   const [session] =useState(props);
   useEffect(() => {
+    if(reload)
+    {
+      
+      //console.log(short().toUUID(props.SessionId))
+      //this.setState((state)=>{state.uuid=short().toUUID(props.SessionId)});
+      async function fetchNote() {
+        const note =await GetNote(session.idsession);
+       
+        if(note)
+        {
+          
+          setValue(note.title);
+         
+          //console.log(this.state);
+        }
+      }
+      fetchNote();
+       
+    }
     //console.log(value);
-
+    //console.log(reload);
     //console.log(props.idsession);
     //console.log(props);
     //console.log(this.props.idsession)
-  },[value]);
+  },[reload,session]);
 
   useInterval(() => {    // Votre logique métier ici   
-    //console.log(session.idsession);
+    //console.log(props);
     //console.log(value);
     //console.log(saved);
     if(value!==saved)
@@ -45,7 +64,7 @@ function TitleNote(props) {
     ,10000);
 
   return (
-    <ReactQuill theme="snow" value={value} onChange={setValue}/>
+    <ReactQuill theme="snow" value={value} defaultValue={props.title} onChange={setValue}/>
   );
-}
+  }
 export default TitleNote;

@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from 'react';
 import getSas from './getSas';
-
+import GetNote from './GetNote'
 // import ballon from './ballon.svg';
 import './App.css';
 import short from 'short-uuid';
@@ -10,20 +10,7 @@ import Gallery from './gallery';
 import SimpleReactLightbox from "simple-react-lightbox";
 
 
-async function GetNote(idSession){
-    const config = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({UserId:"anonymous",SessionId:idSession})
-    }
-  const response = await fetch(`/api/GetNote/`,config);
-  const Note = await response.json();
-  //console.log(Note);
-  return Note;
-}
+
 
 
 const SharedNote = ( props) => {
