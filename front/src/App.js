@@ -20,7 +20,8 @@ class App extends React.Component {
     <div className="App">
     <Header/>
     <Router>
-    <Create path="/" />
+    <Create path="/"/>
+    <Create path="/:SessionId"  />
     <SharedNote path="Share/:SessionId" />
   </Router>
   </div>
