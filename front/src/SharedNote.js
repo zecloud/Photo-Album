@@ -9,10 +9,6 @@ import short from 'short-uuid';
 import Gallery from './gallery';
 import SimpleReactLightbox from "simple-react-lightbox";
 
-
-
-
-
 const SharedNote = ( props) => {
     
     //const SessionId =  props.SessionId;

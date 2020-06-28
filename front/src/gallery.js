@@ -24,9 +24,10 @@ const Gallery = ({ images, scrollPosition }) => (
           ({ index, left, top, key, photo }) => (
             
             <LazyLoadImage
+              className="photo"
               key={photo.key}
               alt={photo.alt}
-              height={photo.height}
+              //height={photo.height}
               effect="blur"
               placeholderSrc={ photo.lowResSrc }
               // Make sure to pass down the scrollPosition,
@@ -34,7 +35,7 @@ const Gallery = ({ images, scrollPosition }) => (
               // whether it must track the scroll position or not
               scrollPosition={scrollPosition}
               src={photo.originalSrc}
-              width="494" />
+              width="485" />
               
               )
        } />
